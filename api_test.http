@@ -1,5 +1,4 @@
-@URL = https://web-production-0f156.up.railway.app
-
+@URL = web-production-aa562.up.railway.app
 ###
 # Obtener todos los usuarios
 GET {{URL}}/traer_usuarios
