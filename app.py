@@ -116,6 +116,70 @@ def actualizar_usuario(id):
     return response
 
 
+
+####################################################################
+
+#PROYECTO
+
+@app.route("/usuario", methods=["POST"])
+@cross_origin()
+def usuario():
+    nombre = request.json["nombre_de_usuario"]
+    contraseña = request.json["contraseña"]
+    email = request.json["email"]
+
+  
+
+    cursor = mysql.connection.cursor()
+
+    sql = "INSERT INTO Usuario(nombre, contrasenia, email) values(%s, %s,%s);"
+    cursor.execute(sql, (nombre, contraseña, email))
+
+
+    mysql.connection.commit()
+
+    cursor.close()
+    response = make_response()
+
+    response = jsonify({"resultado":"Agregado nueva receta"})
+    return response
+
+
+@app.route("/inicio_sesion", methods=["POST"])
+@cross_origin()
+def inicio_sesion():
+    nombre = request.json["nombre_email"]
+    contraseña = request.json["contraseña"]
+    email = request.json["email"]
+
+  
+
+    cursor = mysql.connection.cursor()
+
+    sql = "SELECT id, nombre FRONT Usuario WHERE (nombre =%s OR email=%s) AND contrasenia=%s"
+    cursor.execute(sql, (nombre, email,  contraseña))
+
+
+    mysql.connection.commit()
+
+    cursor.close()
+    response = make_response()
+
+    response = jsonify({"resultado":"Agregado nueva receta"})
+    return response
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

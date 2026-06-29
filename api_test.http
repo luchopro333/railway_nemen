@@ -9,11 +9,12 @@ POST {{URL}}/nuevo_usuario
 Content-Type: application/json
 
 {
-    "nombre": "Juan",
-    "apellido": "Perez",
-    "provincia": "Buenos Aires"
-}
+    "nombre": "juan",
+    "apellido": "pereyra",
+    "provincia": "buenos aires",
+    
 
+}
 
 ###
 # Actualizar usuario con id=1
