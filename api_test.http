@@ -28,3 +28,53 @@ Content-Type: application/json
 ###
 # Eliminar usuario con id=1
 DELETE {{URL}}/eliminar_usuario/1
+
+#############################################
+
+#proyecto
+
+GET {{URL}}/dietas
+Content-Type: application/json
+{
+    
+}
+
+####################################################
+# Plan Semanal
+####################################################
+
+### Obtener todos los planes semanales
+GET {{URL}}/plan_semanal
+
+###
+
+### Crear plan semanal
+POST {{URL}}/plan_semanal
+Content-Type: application/json
+
+{
+    "fecha": "2026-07-06",
+    "nombre": "Plan Semana 1",
+    "id_usuario": 1
+}
+
+###
+
+### Actualizar plan semanal con id=1
+PUT {{URL}}/plan_semanal/1
+Content-Type: application/json
+
+{
+    "fecha": "2026-07-13",
+    "nombre": "Plan Semana Actualizado",
+    "id_usuario": 1
+}
+
+###
+
+### Eliminar plan semanal con id=1
+DELETE {{URL}}/plan_semanal/1
+
+
+
+

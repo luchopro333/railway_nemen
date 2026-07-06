@@ -167,11 +167,80 @@ def inicio_sesion():
 
     response = jsonify({"resultado":"Agregado nueva receta"})
     return response
+@app.route("/plan_semanal", methods=["POST"])
+@cross_origin()
+def agregar_plan_semanal():
+
+    fecha = request.json["fecha"]
+    nombre = request.json["nombre"]
+    id_usuario = request.json["id_usuario"]
+
+    cursor = mysql.connection.cursor()
+
+    sql = """
+        INSERT INTO Plan_semanal
+        (fecha, nombre, id_usuario)
+        VALUES (%s, %s, %s)
+    """
+
+    cursor.execute(sql, (fecha, nombre, id_usuario))
+
+    mysql.connection.commit()
+
+    cursor.close()
+
+    response = jsonify({"resultado": "Plan semanal agregado"})
+    return response
 
 
 
 
 
+
+
+@app.route("/dietas", methods=["GET"])
+@cross_origin()
+def listar_dietas():
+    # Consulta SQL
+    sql = """
+        SELECT id_dieta,
+               nombre,
+               descripcion,
+               id_usuario,
+               filtro_carbohidratos,
+               filtro_proteina,
+               filtro_condicion
+        FROM Dietas
+    """
+
+    # Crear cursor
+    cursor = mysql.connection.cursor()
+    cursor.execute(sql)
+
+    resultado = cursor.fetchall()
+
+    # Cerrar cursor
+    cursor.close()
+
+    if resultado is None or len(resultado) == 0:
+        return jsonify({"mensaje": None})
+
+    dietas = []
+
+    for i in resultado:
+        dieta = {
+            "id": i[0],
+            "nombre": i[1],
+            "descripcion": i[2],
+            "id_usuario": i[3],
+            "filtro_carbohidratos": i[4],
+            "filtro_proteina": i[5],
+            "filtro_condicion": i[6]
+        }
+
+        dietas.append(dieta)
+
+    return jsonify(dietas)
 
 
 
