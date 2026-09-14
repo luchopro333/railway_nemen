@@ -13,10 +13,10 @@ app = Flask(__name__)
 
 import os
 
-app.config["MYSQL_HOST"] = os.environ.get("DB_HOST")
-app.config["MYSQL_USER"] = os.environ.get("DB_USER")
-app.config["MYSQL_PASSWORD"] = os.environ.get("DB_PASSWORD")
-app.config["MYSQL_DB"] = os.environ.get("DB_NAME")
+app.config["MYSQL_HOST"] = "127.0.0.1" #os.environ.get("DB_HOST")
+app.config["MYSQL_USER"] = "root" #os.environ.get("DB_USER")
+app.config["MYSQL_PASSWORD"] = "aula07" # os.environ.get("DB_PASSWORD")
+app.config["MYSQL_DB"] = "callfit" #os.environ.get("DB_NAME")
 
 mysql = MySQL(app)
 
@@ -241,6 +241,49 @@ def listar_dietas():
         dietas.append(dieta)
 
     return jsonify(dietas)
+@app.route("/ingredientes", methods=["GET"])
+@cross_origin()
+def listar_ingredientes():
+    # Consulta SQL para traer todos los ingredientes
+    sql = """
+        SELECT idIngredientes,
+               nombre,
+               porcion,
+               kcal,
+               proteinas,
+               carbohidratos,
+               grasas,
+               sodio,
+               peso
+        FROM ingredientes
+    """
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(sql)
+
+    resultado = cursor.fetchall()
+    cursor.close()
+
+    if resultado is None or len(resultado) == 0:
+        return jsonify({"mensaje": None})
+
+    ingredientes = []
+
+    for fila in resultado:
+        ingrediente = {
+            "idIngredientes": fila[0],
+            "nombre": fila[1],
+            "porcion": fila[2],
+            "kcal": fila[3],
+            "proteinas": fila[4],
+            "carbohidratos": fila[5],
+            "grasas": fila[6],
+            "sodio": fila[7],
+            "peso": fila[8]
+        }
+        ingredientes.append(ingrediente)
+
+    return jsonify(ingredientes)
 
 
 

@@ -1,4 +1,4 @@
-@URL = web-production-aa562.up.railway.app
+@URL = http://127.0.0.1:5000
 ###
 # Obtener todos los usuarios
 GET {{URL}}/traer_usuarios
@@ -31,13 +31,9 @@ DELETE {{URL}}/eliminar_usuario/1
 
 #############################################
 
-#proyecto
-
+###
 GET {{URL}}/dietas
-Content-Type: application/json
-{
-    
-}
+
 
 ####################################################
 # Plan Semanal
@@ -69,7 +65,12 @@ Content-Type: application/json
     "nombre": "Plan Semana Actualizado",
     "id_usuario": 1
 }
+####################################################
+# Ingredientes
+####################################################
 
+### Obtener todos los ingredientes
+GET {{URL}}/ingredientes
 ###
 
 ### Eliminar plan semanal con id=1
